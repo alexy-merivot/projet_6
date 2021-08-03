@@ -41,64 +41,57 @@ app.use("/api/sauces", sauceRoutes);
 //   });
 
 // POST (se connecter)   A FAIRE
-// app.post('/api/auth/signup', (req, res, next) => {
-//     // delete req.body._id;
-//     const user = new User({
-//       ...req.body
-//     });
-//     user.save()
-//     //   .then(() => res.status(201).json({ userId: userId, token: }))
-//       .catch(error => res.status(400).json({ error }));
-//   });
+app.post('/api/auth/signup', (req, res, next) => {
+  });
 
 // // GET (récupérer toutes les sauces)  A FAIRE
-// app.get('/api/sauces', (req, res) => {
-//     Sauce.find()
-//       .then(sauces => res.status(200).json(sauces))
-//       .catch(error => res.status(400).json({ error }));
-//   });
+app.get('/api/sauces', (req, res) => {
+    Sauce.find()
+      .then(sauces => res.status(200).json(sauces))
+      .catch(error => res.status(400).json({ error }));
+  });
 
 // // GET (recuperer une sauce)   A FAIRE
-// app.get('/api/sauces/:id', (req, res) =>
-// {
-//     Sauce.findOne({ _id: req.params.id })
-//     .then(sauce => res.status(200).json(sauce))
-//     .catch(error => res.status(404).json({ error }));
-// })
+app.get('/api/sauces/:id', (req, res) =>
+{
+    Sauce.findOne({ _id: req.params.id })
+    .then(sauce => res.status(200).json(sauce))
+    .catch(error => res.status(404).json({ error }));
+})
 
-// // POST (enregistrer une sauce)     
-// app.post('/api/sauces', (req, res) =>
-// {
-//     console.log(req.body)
-//     const sauce = new Sauce({
-//         ...req.body
-//       });
-//       sauce.save()
-//         .then(() => res.status(201).json({ message: 'Nouvelle sauce enregistrée !'}))
-//         .catch(error => res.status(400).json({ error }));
-// })
+// // POST (enregistrer une sauce)
+app.post('/api/sauces', (req, res) =>
+{
+    console.log(req.body)
+    const sauce = new Sauce({
+        ...req.body
+      });
+      sauce.save()
+        .then(() => res.status(201).json({ message: 'Nouvelle sauce enregistrée !'}))
+        .catch(error => res.status(400).json({ error }));
+})
 
 // // PUT (mettre a jour une sauce)    A FAIRE
-// app.put('/api/sauces/:id', (req, res) =>
-// {
-//     Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-//     .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
-//     .catch(error => res.status(400).json({ error }));
-// })
+app.put('/api/sauces/:id', (req, res) =>
+{
+    Sauce.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
+    .catch(error => res.status(400).json({ error }));
+})
 
 // // DELETE (supprimer une sauce)     A FAIRE 
-// app.delete('/api/sauces/:id', (req, res) =>
-// {
-//     Sauce.deleteOne({ _id: req.params.id })
-//     .then(() => res.status(200).json({ message: 'Sauce supprimée !'}))
-//     .catch(error => res.status(400).json({ error }));
-// })
+app.delete('/api/sauces/:id', (req, res) =>
+{
+    Sauce.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Sauce supprimée !'}))
+    .catch(error => res.status(400).json({ error }));
+})
 
 // POST (like ou dislike d'une sauce)
-// app.post('/api/sauces/:id/like', (req, res) =>
-// {
+app.post('/api/sauces/:id/like', (req, res) =>
+{
     
-// })
+})
 
 module.exports = app;
 
