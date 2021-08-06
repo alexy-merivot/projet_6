@@ -1,42 +1,53 @@
 const User = require("../models/user");
+const jwt = require("jwt-decode")
 const bcrypt = require("bcrypt")
 const cryptoJs = require("crypto-js")
 const jsonWebToken = require("jsonwebtoken")
+
 
 exports.signUp = (req, res) =>
 {
     bcrypt.hash(req.body.password, 10)
     .then(hash =>
     {
-        const emailCrypte = cryptoJs.HmacSHA512(req.body.email, 'AZERTY' ).toString(cryptoJs.enc.Base64)
-        const user = new User({
-            email: emailCrypté,
-            password: hash
-          });
-    })
-    console.log(user)
+        // const emailCrypte = cryptoJs.HmacSHA512(req.body.email, 'AZERTY' ).toString(cryptoJs.enc.Base64)
 
-      user.save()
-        .then(() => res.status(201).json({ message: 'Nouvel utilisateur créé !'}))
-        .catch(error => res.status(400).json({ error }));
+        let user = new User({
+            email: req.body.email,
+            password: hash
+        });
+        console.log(user)
+         console.log("coucou")
+
+        //   var decrypted = CryptoJS.AES.decrypt(openSSLEncrypted, "Secret Passphrase");
+
+        user.save()
+        .then(() => res.status(201).json({ message: 'Nouvel utilisateur créé !'}));
+        console.log("coucou3")
+        .catch( err => res.status(400).json({ error }));
+        console.log("coucou4")
+    })
+    .catch( err => res.status(500).json({error}));
+
 }
 
 exports.login = () =>{
-    Sauce.findOne({ email: emailCrypte})
+    User.findOne({ email: emailCrypte})
     .then(user =>
     {
         if(!user)
         {
             return res.statut(401).json({error: "identifiants invalides"})
-            // TODO Retourner une 401 utilisateur  non trouvé
+            //  Retourner une 401 utilisateur  non trouvé
         }
-    // TOTO si trouvé : récupérer mot de passe soumis (fonction compare de bcrypt)
+    //  si trouvé : récupérer mot de passe soumis (fonction compare de bcrypt)
         bcrypt.compare(req.body.password, user.password)
         .then(valid =>
             {
                 if(!valid)
                 {
-                    // TODO eroor 401
+                    return res.statut(401).json({error: "identifiants invalides"})
+                    //  eroor 401
                 }
                 res.status(200).json({
                     userId: user._id
@@ -44,6 +55,6 @@ exports.login = () =>{
                 })
             })
 
-    }
-    .catch(error => res.status(404).json({ error }));
+    })
+    .catch(error => res.status(400).json({ error }));
 }

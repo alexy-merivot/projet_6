@@ -3,4 +3,4 @@ const router = express.Router();
 const sauceController = require ('../controllers/sauce')
 router.post("/", sauceController.newSauce);
 
-module.export = router;
+module.exports = router;

@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Sauce = require('./models/sauce');
-const User = require('./models/user');
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
 
@@ -79,7 +78,7 @@ app.put('/api/sauces/:id', (req, res) =>
     .catch(error => res.status(400).json({ error }));
 })
 
-// // DELETE (supprimer une sauce)     A FAIRE 
+// // DELETE (supprimer une sauce)     A FAIRE
 app.delete('/api/sauces/:id', (req, res) =>
 {
     Sauce.deleteOne({ _id: req.params.id })
