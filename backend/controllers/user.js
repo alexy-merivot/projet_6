@@ -24,10 +24,10 @@ exports.signUp = (req, res) =>
         user.save()
         .then(() => res.status(201).json({ message: 'Nouvel utilisateur créé !'}));
         console.log("coucou3")
-        .catch( err => res.status(400).json({ error }));
+        .catch( error => res.status(400).json({ error }));
         console.log("coucou4")
     })
-    .catch( err => res.status(500).json({error}));
+    .catch( error => res.status(500).json({error}));
 
 }
 
