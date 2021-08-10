@@ -1,8 +1,6 @@
 const User = require("../models/user");
-const jwt = require("jwt-decode")
 const bcrypt = require("bcrypt")
-const cryptoJs = require("crypto-js")
-const jsonWebToken = require("jsonwebtoken")
+const jwt = require("jsonwebtoken")
 
 
 exports.signUp = (req, res) =>
@@ -16,28 +14,24 @@ exports.signUp = (req, res) =>
             email: req.body.email,
             password: hash
         });
-        console.log(user)
-         console.log("coucou")
 
         //   var decrypted = CryptoJS.AES.decrypt(openSSLEncrypted, "Secret Passphrase");
 
         user.save()
-        .then(() => res.status(201).json({ message: 'Nouvel utilisateur créé !'}));
-        console.log("coucou3")
-        .catch( error => res.status(400).json({ error }));
-        console.log("coucou4")
+        .then(() => res.status(201).json({ message: 'Nouvel utilisateur créé !'}))
+        .catch(error => res.status(400).json({ error }));
     })
     .catch( error => res.status(500).json({error}));
 
 }
 
 exports.login = () =>{
-    User.findOne({ email: emailCrypte})
+    User.findOne({ email: req.res.email})
     .then(user =>
     {
         if(!user)
         {
-            return res.statut(401).json({error: "identifiants invalides"})
+            return res.status(401).json({error: "identifiants invalides"})
             //  Retourner une 401 utilisateur  non trouvé
         }
     //  si trouvé : récupérer mot de passe soumis (fonction compare de bcrypt)
@@ -50,11 +44,17 @@ exports.login = () =>{
                     //  eroor 401
                 }
                 res.status(200).json({
-                    userId: user._id
+                    userId: user._id,
+                    token: jwt.sign(
+                        {userId: user._id},
+                        "RANDOM_TOKEN_SECRET",
+                        {expiresIn: '24h' }
+                    )
                     // token: TODO token de cryptage (voir la doc jsonwebtoken)
                 })
             })
+        .catch(error => res.status(500).json({ error }));
 
     })
-    .catch(error => res.status(400).json({ error }));
+    .catch(error => res.status(500).json({ error }));
 }
