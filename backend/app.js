@@ -25,14 +25,8 @@ app.use((req, res, next) =>
 app.use(express.json());
 
 
-app.post("/api/auth", userRoutes)
-app.post("/api/auth", userRoutes)
-app.post("/api/sauces", sauceRoutes)
-app.get("/api/sauces", sauceRoutes)
-app.get("/api/sauces", sauceRoutes)
-app.put("/api/sauces", sauceRoutes)
-app.delete("/api/sauces", sauceRoutes)
-app.post("/api/sauces", sauceRoutes)
+app.use("/api/auth", userRoutes)
+app.use("/api/sauces", sauceRoutes)
 
 module.exports = app;
 

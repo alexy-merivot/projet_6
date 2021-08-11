@@ -25,7 +25,7 @@ exports.signUp = (req, res) =>
 
 }
 
-exports.login = () =>{
+exports.login = (req, res) =>{
     User.findOne({ email: req.res.email})
     .then(user =>
     {
