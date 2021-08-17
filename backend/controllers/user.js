@@ -26,9 +26,11 @@ exports.signUp = (req, res) =>
 }
 
 exports.login = (req, res) =>{
-    User.findOne({ email: req.res.email})
+    User.findOne({ email: req.body.email})
     .then(user =>
     {
+        console.log("debug user")
+        console.log(user)
         if(!user)
         {
             return res.status(401).json({error: "identifiants invalides"})
