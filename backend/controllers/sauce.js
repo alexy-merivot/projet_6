@@ -1,5 +1,6 @@
 const Sauce = require("../models/sauce");
 const fs = require("fs");
+const sauce = require("../models/sauce");
 
 exports.newSauce = (req, res) => {
   const sauceObject = JSON.parse(req.body.sauce);
