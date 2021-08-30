@@ -36,11 +36,11 @@ exports.getAllSauce = (req, res) => {
 
 exports.getASauce = (req, res) => {
   console.log(("toto1"))
-  console.log(req.body.sauce)
   console.log("toto2")
   Sauce.findOne({ _id: req.params.id })
     .then(sauce => res.status(200).json(sauce))
     .catch(error => res.status(404).json({ error }));
+    console.log(res.sauce)
 }
 
 exports.updateSauce  = (req, res) => {
@@ -72,15 +72,14 @@ exports.likeDislikeSauce = (req, res) => {
   .then( sauce => {
     console.log(sauce)
     if(req.body.like === 1){ // si le user like la sauce pour la première fois
-      sauce.likes = sauce.likes++
+      sauce.likes++
       sauce.usersLiked.push(req.body.userId)
-      console.log( "sauce après like pour la première fois", sauce)
       sauce.updateOne({ _id: req.params.id }, { ...sauce, _id: req.params.id })
       .then(() => res.status(200).json({ message: 'Sauce likée !'}))
       .catch(error => res.status(400).json({ error })); // sauvegarder sauce sur mongoose
-      console.log( "sauce après like pour la première fois", sauce)
+      console.log( "sauce après like pour la première fois après update", sauce)
     }else if(req.body.like === -1){ // si le user dislike la sauce pour la première fois
-      sauce.dislikes = sauce.dislikes++
+      sauce.dislikes++
       sauce.usersDisliked.push(user.userId)
       sauce.updateOne({ _id: req.params.id }, { ...sauce, _id: req.params.id })
       .then(() => res.status(200).json({ message: 'Sauce dislikée !'}))
@@ -109,14 +108,20 @@ exports.likeDislikeSauce = (req, res) => {
       .catch(error => res.status(400).json({ error })); // sauvegarder sauce sur mongoose
       }
     }
-    console.log("toto1")
-    console.log(sauce)
-    console.log("toto2")
+    console.log("toto 1 a la fin")
+    console.log("toto sauce" ,sauce);
   })
   .catch(error => {
     console.log(error)
     return res.status(500).json({error})
     })
-}
+};
 
-// likes et dislike de s'incrémente pas
+
+// likes et dislike s'incrémentent quand je reste sur la page de la sauce mais les likes/dislikes reviennent a 0 quand je back de la page et reviens sur la sauce
+
+
+// quand je modifie une sauce : 
+// - si je modifie juste l'image : ça fonctionne 
+// - si je modifie le reste sauf l'image : ça marche
+// - si je souhaite modifier tout (texte et image) : seulement l'image change
