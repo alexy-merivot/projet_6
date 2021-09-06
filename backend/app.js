@@ -2,10 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require ('path')
-
+var helmet = require('helmet');
 const userRoutes = require('./routes/user');
 const sauceRoutes = require('./routes/sauce');
-
+var session = require('express-session');
+var morgan = require('morgan')
+const { access } = require('fs');
+require('sqreen');
 
 mongoose.connect('mongodb+srv://alexy_merivot:Peluche02650.@cluster0.adymo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -14,6 +17,30 @@ mongoose.connect('mongodb+srv://alexy_merivot:Peluche02650.@cluster0.adymo.mongo
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
+
+// OWASP
+
+app.use(helmet());
+app.disable('x-powered-by');
+
+app.set('trust proxy', 1)
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
+
+app.use(morgan('combined'));
+
+// cat > sqreen.json <<EOF
+// {
+//   "app_name": "YOUR_APPLICATION_NAME",
+//   "token": "YOUR_SQREEN_TOKEN"
+// }
+// EOF
+
+// Fin OWASP
 
 app.use((req, res, next) =>
 {
@@ -33,3 +60,13 @@ app.use("/api/sauces", sauceRoutes)
 
 module.exports = app;
 
+// TODO
+
+// - Injection (morgan, bcrypt, jsonwebtoken)
+// - Piratage de session (fait : helmet et express-session)
+// - Proteger données en transit
+// - Proteger données stockées sur une app
+// - Empecher l'exploitation des controles d'access
+// - Stopper le  cross-site scripting
+// - Proteger le code contre les faille XXE et la deseriallisation non sécurisée
+// - Sécuriser environnement de travail
