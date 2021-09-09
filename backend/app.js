@@ -8,7 +8,7 @@ const sauceRoutes = require('./routes/sauce');
 var session = require('express-session');
 var morgan = require('morgan')
 const { access } = require('fs');
-require('sqreen');
+const xssClean = require('xss-clean');
 
 mongoose.connect('mongodb+srv://alexy_merivot:Peluche02650.@cluster0.adymo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -33,12 +33,7 @@ app.use(session({
 
 app.use(morgan('combined'));
 
-// cat > sqreen.json <<EOF
-// {
-//   "app_name": "YOUR_APPLICATION_NAME",
-//   "token": "YOUR_SQREEN_TOKEN"
-// }
-// EOF
+app.use(xssClean());
 
 // Fin OWASP
 
