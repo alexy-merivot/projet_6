@@ -27,7 +27,7 @@
     "rate-limiter-flexible": "^2.2.4",
     "save": "^2.4.0",
     "sequelize": "^6.6.5",
-    "snyk": "^1.697.0",
+    "snyk": "^1.1064.0",
     "sqreen": "^1.64.2",
     "xss-clean": "^0.1.1"
   },
